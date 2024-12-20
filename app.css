@@ -1,0 +1,271 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --main-bg-color-light: #dfdddd;
+    --main-primary-light: #393e46;
+    --main-text-color-light: #393e46;
+    --cell-border-color-light: black;
+    --board-border-color-light: blue;
+    --cell-bg-color-light: #eeeeee;
+    --caret-color-light: black;
+    --selection-color-light: unset;
+
+    --main-bg-color-dark: #232931;
+    --main-primary-dark: #4ecca3;
+    --main-text-color-dark: #eeeeee;
+    --cell-border-color-dark: #eeeeee;
+    --cell-bg-color-dark: #393e46;
+    --board-border-color-dark: rgb(7, 203, 203);
+    --caret-color-dark: #eeeeee;
+    --selection-color-dark: #2b2a28;
+
+    --blue: #159ce4;
+    --black: #32383c;
+}
+
+.dark {
+    --bg: var(--main-bg-color-dark);
+    --main-text-color: var(--main-text-color-dark);
+    --primary: var(--main-primary-dark);
+    --board-border: var(--board-border-color-dark);
+    --cell-border: var(--cell-border-color-dark);
+    --cell-bg: var(--cell-bg-color-dark);
+    --caret-color: var(--caret-color-dark);
+    --selection-color: var(--selection-color-dark);
+}
+
+.light {
+    --bg: var(--main-bg-color-light);
+    --main-text-color: var(--main-text-color-light);
+    --primary: var(--main-primary-light);
+    --board-border: var(--board-border-color-light);
+    --cell-border: var(--cell-border-color-light);
+    --cell-bg: var(--cell-bg-color-light);
+    --caret-color: var(--caret-color-light);
+    --selection-color: var(--selection-color-light);
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+    caret-color: var(--caret-color);
+    transition: color 300ms ease-in-out, background-color 300ms ease-in-out;
+    color: var(--main-text-color);
+}
+
+::selection {
+    background-color: var(--selection-color);
+}
+
+.h1 {
+    color: var(--primary);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: min(60vh, 80vw);
+}
+
+.game-area {
+    border: 5px solid var(--board-border);
+    padding: 0;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(9, calc(100% / 9));
+    grid-template-rows: repeat(9, calc(100% / 9));
+    margin: auto;
+    aspect-ratio: auto 1 / 1;
+}
+
+.cell {
+    text-align: center;
+    border-radius: 0%;
+    border: 1px solid var(--cell-border);
+    padding: 0%;
+    font-weight: 400;
+    background-color: var(--cell-bg);
+    color: var(--main-text-color);
+    transition: transform 100ms ease-in, color 150ms ease-in-out,
+        background-color 150ms ease-in-out;
+}
+
+.cell:focus {
+    transform: scale(1.1);
+}
+
+.cell.x-1 {
+    border-top: 0px;
+}
+
+.cell.x-9 {
+    border-bottom: 0px;
+}
+
+.cell.x-3,
+.cell.x-6 {
+    border-bottom-width: 2px;
+}
+
+.cell.x-4,
+.cell.x-7 {
+    border-top-width: 2px;
+}
+
+.cell.y-1 {
+    border-left-width: 0px;
+}
+
+.cell.y-9 {
+    border-right-width: 0px;
+}
+
+.cell.y-3,
+.cell.y-6 {
+    border-right-width: 2px;
+}
+
+.cell.y-4,
+.cell.y-7 {
+    border-left-width: 2px;
+}
+
+.buttons-container {
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.click-cell-desc {
+    width: 50%;
+}
+
+.invalidInput {
+    background-color: red;
+    color: white;
+}
+
+.validInput {
+    background-color: green;
+    color: white;
+}
+
+.revealed {
+    background-color: orange;
+    color: white;
+}
+
+input[type='radio']:checked~span:before {
+    border: 5px solid var(--blue);
+}
+
+input[type='radio']:hover~span:before {
+    border-color: var(--blue);
+}
+
+input[type='radio']:focus~span:before {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(21, 156, 228, 0.4);
+}
+
+.toggleDarkMode {
+    position: fixed;
+    display: flex;
+    padding-right: 2rem;
+    margin-top: 2rem;
+    top: 0;
+    left: 0;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+input[type='checkbox'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 30px;
+    vertical-align: middle;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.toggleDarkMode label {
+    color: var(--main-text-color);
+    padding-right: 8px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+.toggleDarkMode span {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.toggleDarkMode span:before {
+    display: block;
+    width: 50px;
+    height: 30px;
+    content: '';
+    background-color: #8296a4;
+    border-radius: 28px;
+    transition: background-color 0.3s ease;
+}
+
+.toggleDarkMode span:after {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    display: block;
+    width: 28px;
+    height: 28px;
+    visibility: visible;
+    content: '';
+    background-color: #fff;
+    border-radius: 28px;
+    transition: left 0.3s ease;
+}
+
+input[type='checkbox']:checked~span:before {
+    background-color: var(--blue);
+}
+
+input[type='checkbox']:checked~span:after {
+    top: 1px;
+    left: 21px;
+}
+
+input[type='checkbox']:hover~span:before {
+    background-color: #3db5eb;
+}
+
+input[type='checkbox']:not(:checked):hover~span:before {
+    background-color: #afbec9;
+}
+
+input[type='checkbox']:focus~span:before {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(21, 156, 228, 0.4);
+}
